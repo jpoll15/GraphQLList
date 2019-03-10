@@ -2,38 +2,62 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import ContactList from "./ContactList";
 import axios from "axios";
-console.log(axios)
-//import singleContact from "./singleContact";
 
 class Main extends Component {
   constructor() {
     super();
     this.state = {
       contacts: [],
-      //selectedContact: {}
+      page: 0,
+      count: 0
     };
-    //this.selectContact = this.selectContact.bind(this);
+    this.handleClick = this.handleClick.bind(this)
   }
 
   async componentDidMount() {
-    const {data} = await axios.post('http://localhost:3000', {
-      "query": "query {allStudents {id name school course}}"
+    const {data: studentData} = await axios.get('http://localhost:3000', {
+      params: {
+        query: `query {
+          allStudents(page: 0, perPage: 3) {
+            id
+            name
+            school
+            course: class
+          }
+        }`
+      }
     })
-    //  JSON.stringify({params: `query {
-    //   allStudents {
-    //     id
-    //   }
-    // }`})
-    console.log('RES DATA: ', data)
-    this.setState({ contacts: data.data.allStudents });
+    const {data: count} = await axios.get('http://localhost:3000', {
+      params: {
+        query: `query {
+          allStudents {
+            id
+          }
+        }`
+      }
+    })
+    await this.setState({ contacts: studentData.data.allStudents, count: count.data.allStudents.length });
   }
-  // async selectContact(contactId) {
-  //   const response = await axios.get(`/api/contacts/${contactId}`);
-  //   this.setState({ selectedContact: response.data });
-  // }
+
+  async handleClick(event) {
+    await this.setState({page: this.state.page + (event.target.name === 'next' ? 1 : -1)})
+    console.log(this.state.page)
+    const {data: studentData} = await axios.get('http://localhost:3000', {
+      params: {
+        query: `query {
+          allStudents(page: ${this.state.page}, perPage: 3) {
+            id
+            name
+            school
+            course: class
+          }
+        }`
+      }
+    })
+    await this.setState({contacts: studentData.data.allStudents})
+  }
 
   render() {
-    console.log(this.selectContact);
     return (
       <div id="main">
         <div id="navbar">
@@ -42,8 +66,19 @@ class Main extends Component {
         <div id="container">
           <ContactList
             contactList={this.state.contacts}
-            //selectContact={this.selectContact}
           />
+          <div>
+          {this.state.page > 0 && (
+              <button display="block" type="button" name="prev" onClick={this.handleClick}>
+                Prev
+              </button>
+            )}
+          {this.state.page < (Math.ceil(this.state.count / 3) - 1) && (
+              <button display="block" type="button" name="next" onClick={this.handleClick}>
+                Next
+              </button>
+            )}
+          </div>
         </div>
       </div>
     );

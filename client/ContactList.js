@@ -1,7 +1,6 @@
 import React from "react";
 import ContactRow from "./ContactRow";
 function ContactList(props) {
-  console.log(props);
   return (
     <table>
       <tbody>
@@ -19,9 +18,6 @@ function ContactList(props) {
               name={contact.name}
               school={contact.school}
               course={contact.course}
-              //phone={contact.phone}
-              //email={contact.email}
-              //selectContact={props.selectContact}
             />
           );
         })}
