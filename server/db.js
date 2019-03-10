@@ -5,7 +5,7 @@ module.exports = {
     {id: 2, name: 'Brian', school: 'Georgia Institute of Technology', class: 'MS Data Analytics'},
     {id: 3, name: 'Lorraine', school: 'UC Davis School of Medicine', class: 'MD'},
     {id: 4, name: 'Lara', school: 'London School of Economics', class: 'MA Media and Communications'},
-    {id: 5, name: 'Aashiq', school: 'NYCOM', class: 'DO'},
+    {id: 5, name: 'Nayaab', school: 'New York College of Medicine', class: 'DO'},
     {id: 6, name: 'Tiffany', school: 'Weill Cornell Medical College', class: 'MD'},
   ]
 }
