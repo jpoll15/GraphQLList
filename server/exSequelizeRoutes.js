@@ -2,7 +2,6 @@ const express = require('express')
 const router = express.Router()
 const {Student, School} = require('./Sequelize.js')
 
-// some RESTful routes
 router.get('/api/students', async (req, res, next) => {
   try {
     const students = await Student.findAll()
@@ -12,6 +11,7 @@ router.get('/api/students', async (req, res, next) => {
   }
 })
 
+// just for the student -- could be underfetching
 router.get('/api/students/:id', async (req, res, next) => {
   try {
     const student = await Student.findById(req.params.id)
@@ -21,6 +21,7 @@ router.get('/api/students/:id', async (req, res, next) => {
   }
 })
 
+// student and school -- could be overfetching
 router.get('/api/students/:id', async (req, res, next) => {
   try {
     const student = await Student.findById(req.params.id, {
@@ -32,6 +33,7 @@ router.get('/api/students/:id', async (req, res, next) => {
   }
 })
 
+// gets students with the same school id -- called after one of the above routes in the classmate scenario
 router.get('/api/students/:schoolId', async (req, res, next) => {
   try {
     const students = await Student.findAll({
@@ -54,6 +56,7 @@ router.get('/api/schools/:id', async (req, res, next) => {
   }
 })
 
+// the classmate route--two calls to the database, and very specialized
 router.get('/api/students/:id/school/students', async (req, res, next) => {
   try {
     const {schoolId} = await Student.findById(req.params.id, {

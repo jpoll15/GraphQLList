@@ -42,7 +42,6 @@ export default class Contacts extends Component {
 
   async handleClick(event) {
     await this.setState({page: this.state.page + (event.target.name === 'next' ? 1 : -1)})
-    console.log(this.state.page)
     const {data: studentData} = await axios.get('http://localhost:3000', {
       params: {
         query: `query {
