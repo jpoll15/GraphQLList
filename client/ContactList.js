@@ -16,7 +16,7 @@ function ContactList(props) {
               key={contact.id}
               id={contact.id}
               name={contact.name}
-              school={contact.school}
+              school={contact.school.name}
               course={contact.course}
             />
           );

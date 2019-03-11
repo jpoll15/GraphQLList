@@ -18,20 +18,6 @@ app.use(express.static(path.join(__dirname, '..', 'public')))
 
 // API routes
 
-// app.get('/api/contacts', (req, res, next) => {
-//   Contact.findAll({
-//     attributes: ['id', 'name', 'email', 'phone']
-//   })
-//     .then(contacts => res.json(contacts))
-//     .catch(next)
-// })
-
-// app.get('/api/contacts/:contactId', (req, res, next) => {
-//   Contact.findById(req.params.contactId)
-//     .then(contact => res.json(contact))
-//     .catch(next)
-// })
-
 // For all GET requests that aren't to an API route,
 // we will send the index.html!
 app.get('/*', (req, res, next) => {

@@ -33,7 +33,7 @@ body {
   padding: 5px;
 }
 
-#container {
+.container {
   align-items: center;
   cursor: default;
   display: flex;
